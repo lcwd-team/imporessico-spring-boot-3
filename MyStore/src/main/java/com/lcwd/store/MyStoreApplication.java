@@ -11,7 +11,7 @@ public class MyStoreApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MyStoreApplication.class, args);
 	
-		
+		//Test
 		
 		
 	}
