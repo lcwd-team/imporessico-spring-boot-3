@@ -1,0 +1,7 @@
+{
+    "name":"Deepak Kumar",
+    "city":"Hydrabad",
+    "profession":"WEB Developer",
+    "exp":5,
+    "courses":["java","python","javascript","node"]
+}
