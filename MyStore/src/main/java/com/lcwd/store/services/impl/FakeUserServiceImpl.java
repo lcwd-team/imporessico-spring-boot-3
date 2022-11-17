@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import com.lcwd.store.dtos.UserDto;
 import com.lcwd.store.entities.User;
+import com.lcwd.store.excetions.InvalidAgeException;
+import com.lcwd.store.excetions.ResourceNotFountException;
 import com.lcwd.store.services.UserService;
 
 @Service
@@ -23,8 +25,13 @@ public class FakeUserServiceImpl implements UserService {
 	@Autowired
 	private ModelMapper mapper;
 	private Logger logger = LoggerFactory.getLogger(FakeUserServiceImpl.class);
+
 	@Override
 	public UserDto addUser(UserDto userDto) {
+
+//		if (userDto.getName().length() < 3) {
+//			throw new InvalidAgeException("User name is invalid: Thats why age is also invalid");
+//		}
 		// DTO->ENTITY
 		User user = mapper.map(userDto, User.class);
 		boolean result = users.add(user);
@@ -59,7 +66,7 @@ public class FakeUserServiceImpl implements UserService {
 	@Override
 	public UserDto getUser(int userId) {
 		User user1 = users.stream().filter(user -> user.getId() == userId).findFirst()
-				.orElseThrow(() -> new RuntimeException("User with given id not found"));
+				.orElseThrow(() -> new ResourceNotFountException("User with given id not found"));
 		return mapper.map(user1, UserDto.class);
 	}
 
