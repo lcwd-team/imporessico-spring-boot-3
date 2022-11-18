@@ -28,15 +28,12 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
-	private Logger logger=LoggerFactory.getLogger(UserController.class);
+	private Logger logger = LoggerFactory.getLogger(UserController.class);
 
 	// create
 	@PostMapping
 	public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) {
-		
-		
-		
-		UserDto userDto2 = userService.addUser(userDto);
+			UserDto userDto2 = userService.addUser(userDto);
 		return new ResponseEntity<UserDto>(userDto2, HttpStatus.CREATED);
 	}
 
