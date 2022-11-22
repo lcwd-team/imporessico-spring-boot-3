@@ -18,7 +18,7 @@ import com.lcwd.store.excetions.ResourceNotFountException;
 import com.lcwd.store.services.UserService;
 
 @Service
-@Primary
+//@Primary
 public class FakeUserServiceImpl implements UserService {
 
 	private List<User> users = new ArrayList<>();
