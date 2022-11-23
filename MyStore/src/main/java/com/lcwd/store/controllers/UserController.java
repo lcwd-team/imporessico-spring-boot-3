@@ -40,7 +40,7 @@ public class UserController {
 	// get single.
 
 	@GetMapping("/{userId}")
-	public ResponseEntity<UserDto> getUser(@PathVariable int userId) {
+	public ResponseEntity<UserDto> getUser(@PathVariable String userId) {
 		UserDto user = userService.getUser(userId);
 		return ResponseEntity.ok(user);
 	}
@@ -54,14 +54,14 @@ public class UserController {
 
 	// delete
 	@DeleteMapping("/{userId}")
-	public ResponseEntity<ApiResponse> deleteUser(@PathVariable int userId) {
+	public ResponseEntity<ApiResponse> deleteUser(@PathVariable String userId) {
 		userService.deletUser(userId);
 		return ResponseEntity.ok(ApiResponse.builder().message("User is deleted").success(true).build());
 	}
 
 	// update
 	@PutMapping("/{userId}")
-	public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto, @PathVariable int userId) {
+	public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto, @PathVariable String userId) {
 		UserDto userDto2 = userService.updateUser(userDto, userId);
 		return new ResponseEntity<UserDto>(userDto2, HttpStatus.OK);
 	}

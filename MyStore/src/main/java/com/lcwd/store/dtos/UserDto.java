@@ -23,7 +23,7 @@ import lombok.ToString;
 @Builder
 public class UserDto {
 
-	private int id;
+	private String id;
 
 	@NotBlank(message = "Name is Required !!")
 	@Size(min = 5, max = 15, message = "User name must be of Min=5 and Max=15 !!")

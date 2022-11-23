@@ -33,7 +33,7 @@ public class UserServiceJpaImpl implements UserService {
     }
 
     @Override
-    public UserDto updateUser(UserDto userDto, int userId) {
+    public UserDto updateUser(UserDto userDto, String userId) {
 
         // get the old user:
         User user = userRepository.findById(userId)
@@ -50,7 +50,7 @@ public class UserServiceJpaImpl implements UserService {
     }
 
     @Override
-    public UserDto getUser(int userId) {
+    public UserDto getUser(String userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFountException("user with given id not found on server !!"));
 
@@ -64,7 +64,7 @@ public class UserServiceJpaImpl implements UserService {
     }
 
     @Override
-    public void deletUser(int userId) {
+    public void deletUser(String userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFountException("user with given id not found on server !!"));
         userRepository.delete(user);
