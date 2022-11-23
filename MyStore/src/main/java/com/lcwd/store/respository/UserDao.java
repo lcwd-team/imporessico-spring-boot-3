@@ -1,9 +1,6 @@
 package com.lcwd.store.respository;
 
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -38,19 +35,33 @@ public class UserDao {
 	// get all
 	public List<User> getAllUsers() {
 		String queryString = "select * from jdbc_user";
-		List<Map<String, Object>> listOfUsers = jdbcTemplate.queryForList(queryString);
-		List<User> listUsers = listOfUsers.stream().map(m -> {
-			User user = new User();
-			user.setId(Integer.parseInt(m.get("id").toString()));
-			user.setName(m.get("name").toString());
-			user.setEmail(m.get("email").toString());
-			user.setPassword(m.get("password").toString());
-			user.setAbout(m.get("about").toString());
-			user.setGender(m.get("gender").toString());
-			return user;
+		List<User> users = jdbcTemplate.query(queryString, new UserRowMapper());
+		return users;
 
-		}).collect(Collectors.toList());
-		return listUsers;
+		// List<Map<String, Object>> listOfUsers =
+		// jdbcTemplate.queryForList(queryString);
+
+		// // Manully: convert all the map object to user object:
+		// List<User> listUsers = listOfUsers.stream().map(m -> {
+		// User user = new User();
+		// user.setId(Integer.parseInt(m.get("id").toString()));
+		// user.setName(m.get("name").toString());
+		// user.setEmail(m.get("email").toString());
+		// user.setPassword(m.get("password").toString());
+		// user.setAbout(m.get("about").toString());
+		// user.setGender(m.get("gender").toString());
+		// return user;
+
+		// }).collect(Collectors.toList());
+
+		// return listUsers;
+	}
+
+	// get single user data:
+	public User getUser(int userId) {
+		String query = "select * from jdbc_user WHERE id = ?";
+		User user = jdbcTemplate.queryForObject(query, new UserRowMapper(), userId);
+		return user;
 	}
 
 }

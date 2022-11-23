@@ -33,7 +33,7 @@ public class UserController {
 	// create
 	@PostMapping
 	public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) {
-			UserDto userDto2 = userService.addUser(userDto);
+		UserDto userDto2 = userService.addUser(userDto);
 		return new ResponseEntity<UserDto>(userDto2, HttpStatus.CREATED);
 	}
 
@@ -76,13 +76,15 @@ public class UserController {
 		return ResponseEntity.ok(user);
 	}
 
-//	// method for handling exception
-//	@ExceptionHandler(ResourceNotFountException.class)
-//	public ResponseEntity<ApiResponse> handleRunTimeException(ResourceNotFountException e){
-//	
-//		logger.info("Runtime Exception Generated : {} ",e.getMessage());
-//		return new ResponseEntity<ApiResponse>(ApiResponse.builder().message(e.getMessage()).success(false).build(),
-//				HttpStatus.NOT_FOUND);
-//	}
+	// // method for handling exception
+	// @ExceptionHandler(ResourceNotFountException.class)
+	// public ResponseEntity<ApiResponse>
+	// handleRunTimeException(ResourceNotFountException e){
+	//
+	// logger.info("Runtime Exception Generated : {} ",e.getMessage());
+	// return new
+	// ResponseEntity<ApiResponse>(ApiResponse.builder().message(e.getMessage()).success(false).build(),
+	// HttpStatus.NOT_FOUND);
+	// }
 
 }

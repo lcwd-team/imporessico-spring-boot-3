@@ -3,22 +3,19 @@ package com.lcwd.store.services.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.lcwd.store.dtos.UserDto;
 import com.lcwd.store.entities.User;
-import com.lcwd.store.excetions.InvalidAgeException;
 import com.lcwd.store.excetions.ResourceNotFountException;
 import com.lcwd.store.services.UserService;
 
 @Service
-//@Primary
+// @Primary
 public class FakeUserServiceImpl implements UserService {
 
 	private List<User> users = new ArrayList<>();
@@ -29,9 +26,10 @@ public class FakeUserServiceImpl implements UserService {
 	@Override
 	public UserDto addUser(UserDto userDto) {
 
-//		if (userDto.getName().length() < 3) {
-//			throw new InvalidAgeException("User name is invalid: Thats why age is also invalid");
-//		}
+		// if (userDto.getName().length() < 3) {
+		// throw new InvalidAgeException("User name is invalid: Thats why age is also
+		// invalid");
+		// }
 		// DTO->ENTITY
 		User user = mapper.map(userDto, User.class);
 		boolean result = users.add(user);

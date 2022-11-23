@@ -14,7 +14,7 @@ import com.lcwd.store.respository.UserDao;
 import com.lcwd.store.services.UserService;
 
 @Service
-@Primary
+// @Primary
 public class UserServiceImpl implements UserService {
 
 	@Autowired
@@ -33,21 +33,21 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDto updateUser(UserDto user, int userId) {
-		// TODO Auto-generated method stub
+		// TODO: Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public UserDto getUser(int userId) {
-		// TODO Auto-generated method stub
-		return null;
+		User user = userDao.getUser(userId);
+		return mapper.map(user, UserDto.class);
 	}
 
 	@Override
 	public List<UserDto> getAll() {
 		List<User> allUsers = userDao.getAllUsers();
-		return allUsers.stream().map(user->mapper.map(user, UserDto.class)).collect(Collectors.toList());
-		
+		return allUsers.stream().map(user -> mapper.map(user, UserDto.class)).collect(Collectors.toList());
+
 	}
 
 	@Override

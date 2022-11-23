@@ -8,8 +8,6 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.lcwd.store.entities.User;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,7 +27,7 @@ public class UserDto {
 
 	@NotBlank(message = "Name is Required !!")
 	@Size(min = 5, max = 15, message = "User name must be of Min=5 and Max=15 !!")
-	@Pattern(regexp = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$",message = "Invalid User Name !!")
+	@Pattern(regexp = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$", message = "Invalid User Name !!")
 	private String name;
 
 	@Email(message = "Valid email is Required !!")
@@ -41,10 +39,10 @@ public class UserDto {
 
 	private String about;
 
-	@NotBlank(message = "Gender is required")	
+	@NotBlank(message = "Gender is required")
 	private String gender;
-	
-	@JsonFormat(pattern = "yyyy/MM/dd")
+
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dob;
 
 }
