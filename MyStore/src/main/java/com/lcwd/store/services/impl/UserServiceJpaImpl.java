@@ -73,7 +73,10 @@ public class UserServiceJpaImpl implements UserService {
 
     @Override
     public List<UserDto> searchUser(String keywords) {
-        return null;
+        List<User> userList = userRepository.findByNameContaining(keywords);
+        List<UserDto> userDtoList = userList.stream().map(user -> mapper.map(user, UserDto.class))
+                .collect(Collectors.toList());
+        return userDtoList;
     }
 
 }

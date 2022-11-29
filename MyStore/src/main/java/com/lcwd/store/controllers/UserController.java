@@ -67,24 +67,20 @@ public class UserController {
 	}
 
 	// search
-
-	// get single.
-
 	@GetMapping("/search/{keywords}")
 	public ResponseEntity<List<UserDto>> searchUser(@PathVariable String keywords) {
-		List<UserDto> user = userService.searchUser(keywords);
-		return ResponseEntity.ok(user);
+		List<UserDto> searchUsers = userService.searchUser(keywords);
+		return ResponseEntity.ok(searchUsers);
 	}
-
-	// // method for handling exception
-	// @ExceptionHandler(ResourceNotFountException.class)
-	// public ResponseEntity<ApiResponse>
-	// handleRunTimeException(ResourceNotFountException e){
-	//
-	// logger.info("Runtime Exception Generated : {} ",e.getMessage());
-	// return new
-	// ResponseEntity<ApiResponse>(ApiResponse.builder().message(e.getMessage()).success(false).build(),
-	// HttpStatus.NOT_FOUND);
-	// }
-
 }
+
+// // method for handling exception
+// @ExceptionHandler(ResourceNotFountException.class)
+// public ResponseEntity<ApiResponse>
+// handleRunTimeException(ResourceNotFountException e){
+//
+// logger.info("Runtime Exception Generated : {} ",e.getMessage());
+// return new
+// ResponseEntity<ApiResponse>(ApiResponse.builder().message(e.getMessage()).success(false).build(),
+// HttpStatus.NOT_FOUND);
+// }
