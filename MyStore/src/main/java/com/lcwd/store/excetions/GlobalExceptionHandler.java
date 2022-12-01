@@ -66,4 +66,13 @@ public class GlobalExceptionHandler {
 				HttpStatus.BAD_REQUEST);
 	}
 
+	// method for handling Invalid age exception
+	@ExceptionHandler(BadRequestException.class)
+	public ResponseEntity<ApiResponse> handleBadRequest(BadRequestException e) {
+		logger.info("Result is Empty : {} ", e.getMessage());
+		return new ResponseEntity<ApiResponse>(
+				ApiResponse.builder().message(e.getMessage()).success(false).build(),
+				HttpStatus.BAD_REQUEST);
+	}
+
 }

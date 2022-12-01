@@ -1,6 +1,7 @@
 package com.lcwd.store.respository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,7 +15,7 @@ public interface UserRepository extends JpaRepository<User, String> {
     // above is implemented by spring boot data jpa
     User findByName(String name);
 
-    User findByEmail(String email);
+    Optional<User> findByEmail(String email);
 
     User findByEmailAndPassword(String email, String password);
 
