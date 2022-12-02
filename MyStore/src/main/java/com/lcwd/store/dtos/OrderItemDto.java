@@ -8,10 +8,16 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class ApiResponse {
-	private String message;
-	private boolean success;
+public class OrderItemDto {
+
+    private int orderItemId;
+
+    private int quantity;
+
+    private ProductDto product;
+
+    private int totalPrice;
 }

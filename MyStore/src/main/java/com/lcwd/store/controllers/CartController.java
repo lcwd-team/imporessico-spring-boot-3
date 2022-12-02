@@ -37,4 +37,8 @@ public class CartController {
 
     }
 
+    // TODO: remove item from cart
+
+    // TODO: Clear cart
+
 }

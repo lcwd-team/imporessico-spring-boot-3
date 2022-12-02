@@ -14,27 +14,26 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@Getter
+@Setter
 @Entity
-@Table(name = "jpa_cart_items")
-public class CartItem {
+@Builder
+@Table(name = "jpa_order_items")
+public class OrderItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int cardItemId;
+    private int orderItemId;
 
     private int quantity;
-
-    private int totalPrice;
 
     @OneToOne
     private Product product;
 
     @ManyToOne
-    private Cart cart;
+    private Order order;
 
+    private int totalPrice;
 }
