@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,10 +30,13 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	private Logger logger = LoggerFactory.getLogger(UserController.class);
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	// create
 	@PostMapping
 	public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) {
+		userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
 		UserDto userDto2 = userService.addUser(userDto);
 		return new ResponseEntity<UserDto>(userDto2, HttpStatus.CREATED);
 	}
