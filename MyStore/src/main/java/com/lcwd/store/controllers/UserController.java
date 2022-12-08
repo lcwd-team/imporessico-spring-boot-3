@@ -9,6 +9,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,8 +25,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lcwd.store.dtos.ApiResponse;
+import com.lcwd.store.dtos.JwtRequest;
+import com.lcwd.store.dtos.JwtResponse;
 import com.lcwd.store.dtos.UserDto;
+import com.lcwd.store.excetions.BadRequestException;
 import com.lcwd.store.services.UserService;
+
+import security.JwtTokenHelper;
 
 @RestController
 @RequestMapping("/users")
@@ -32,6 +42,15 @@ public class UserController {
 	private Logger logger = LoggerFactory.getLogger(UserController.class);
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+
+	@Autowired
+	private AuthenticationManager manager;
+
+	@Autowired
+	private UserDetailsService userDetailsService;
+
+	@Autowired
+	private JwtTokenHelper helper;
 
 	// create
 	@PostMapping
@@ -76,6 +95,33 @@ public class UserController {
 		List<UserDto> searchUsers = userService.searchUser(keywords);
 		return ResponseEntity.ok(searchUsers);
 	}
+
+	// login api
+	@PostMapping("/login")
+	public ResponseEntity<JwtResponse> loginUser(@RequestBody JwtRequest request) {
+		this.authenticate(request.getUsername(), request.getPassword());
+		UserDetails userDetails = this.userDetailsService.loadUserByUsername(request.getUsername());
+		String token = helper.generateToken(userDetails);
+		JwtResponse build = JwtResponse.builder().jwtToken(token).userDetails(userDetails).build();
+		return ResponseEntity.status(HttpStatus.CREATED).body(build);
+
+	}
+
+	private void authenticate(String username, String password) {
+		UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+				username, password);
+		try {
+
+			this.manager.authenticate(usernamePasswordAuthenticationToken);
+
+		} catch (BadCredentialsException e) {
+			logger.info("Invalid Username password !!");
+
+			BadRequestException exception = new BadRequestException("Invalid Username and Password !!");
+			throw exception;
+		}
+	}
+
 }
 
 // // method for handling exception

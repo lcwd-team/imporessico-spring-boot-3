@@ -1,5 +1,6 @@
 package com.lcwd.store.entities;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.UUID;
 
@@ -9,6 +10,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,7 +30,7 @@ import lombok.ToString;
 // jpa
 @Entity // important
 @Table(name = "jpa_users") // optional
-public class User {
+public class User implements UserDetails {
 
 	@Id // important
 	// @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,6 +50,37 @@ public class User {
 	private String gender;
 
 	private Date dob;
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getUsername() {
+		return this.email;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
+	}
 
 	// public User() {
 	// this.id = UUID.randomUUID().toString();

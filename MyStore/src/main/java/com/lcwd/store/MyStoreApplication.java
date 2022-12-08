@@ -1,15 +1,16 @@
 package com.lcwd.store;
 
-import org.hibernate.dialect.MySQL8Dialect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.lcwd.store.respository.UserDao;
 
 @SpringBootApplication
+@ComponentScan(basePackages = {"com.lcwd.store","security"})
 public class MyStoreApplication implements CommandLineRunner {
 
 	@Autowired
