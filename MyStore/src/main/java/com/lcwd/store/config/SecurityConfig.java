@@ -9,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -23,6 +24,7 @@ import security.JwtAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
 	@Autowired
@@ -36,6 +38,22 @@ public class SecurityConfig {
 	
 	@Autowired
 	private UserDetailsService userDetailsService;
+	
+	private String[] PUBLIC_URLS= {
+			"/swagger-ui/**",
+			"/webjars/**",
+			"/swagger-resources/**",
+			"/v3/api-docs",
+			"/v2/api-docs"
+		
+			
+	};
+	
+	private String[] adminURL= {
+			"/users/**",			
+			"/products/**",
+			"/categories/**"
+	};
 	
   
 //	@Autowired
@@ -54,7 +72,8 @@ public class SecurityConfig {
 		.csrf()
 		.disable()
 		.authorizeHttpRequests()
-		.antMatchers(HttpMethod.POST,"/login")
+		.antMatchers(HttpMethod.DELETE,adminURL).hasRole("ADMIN")
+		.antMatchers(PUBLIC_URLS)
 		.permitAll()
 		.antMatchers(HttpMethod.POST,"/users/**")	
 		.permitAll()

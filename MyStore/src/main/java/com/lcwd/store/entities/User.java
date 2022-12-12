@@ -2,18 +2,27 @@ package com.lcwd.store.entities;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import org.aspectj.weaver.NewConstructorTypeMunger;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import antlr.collections.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -50,11 +59,20 @@ public class User implements UserDetails {
 	private String gender;
 
 	private Date dob;
+	
+	@ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+	private Set<Role> roles=new HashSet<>();
 
+	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub
-		return null;
+		
+		Set<SimpleGrantedAuthority> authorities = roles.stream().map(role->{
+			return new SimpleGrantedAuthority(role.getRoleName());
+		}).collect(Collectors.toSet());
+		
+		return authorities;
 	}
 
 	@Override
